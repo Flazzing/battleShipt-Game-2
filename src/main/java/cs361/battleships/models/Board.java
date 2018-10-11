@@ -97,49 +97,37 @@ public class Board {
                     break;
                 }
             }
+
             if (hit) {
 
-            	boolean sunk;
+				int hitCount = 0; //keeps track number of hits
+				int shipLength = 0;
 				for( Square s1 : result.getShip().getOccupiedSquares()){
-					boolean alreadyHit = false;
+					shipLength++;
 					for( Result r : attacks){
-						if( ( s1.getColumn() == r.getLocation().getColumn()
-							&& s1.getRow() == r.getLocation().getRow() )
-								|| ( attackLoc.getColumn() == s1.getColumn()
-								&& attackLoc.getRow() == s1.getRow() )){
-							alreadyHit = true;
+
+						if ( s1.getColumn() == r.getLocation().getColumn()
+								&& s1.getRow() == r.getLocation().getRow() ){
+							hitCount++;
+							System.out.println("this has been hit in the past");
+						}
+
+						if ( attackLoc.getColumn() == s1.getColumn()
+								&& attackLoc.getRow() == s1.getRow() ){
+							hitCount++;
+							System.out.println("hit now");
 						}
 					}
-					if(alreadyHit == true) {
-						sunk = true;
-					} else {
-						sunk = false;
-					}
-				}
-//				for( Result r : this.attacks ){
-//					int hitSquares = 0;
-//					if( r.getShip().getKind() == result.getShip().getKind() ){
-//						hitSquares++;
-//					}
-//					if ( result.getShip().getKind() == "MINESWEEPER"
-//						&& hitSquares == 1 ) {
-//						result.setResult(AtackStatus.SUNK);
-//
-//						int sunkShips = 0;
-//						for (Result r1 : this.attacks) {
-//							if (r1.getResult() == AtackStatus.SUNK) {
-//								sunkShips++;
-//							}
-//						}
-//						if (sunkShips == 2) {
-//							result.setResult(AtackStatus.SURRENDER);
-//
-//						}
-//					}
-//
-//				}
 
-				result.setResult(AtackStatus.HIT);
+				}
+
+				if(hitCount == shipLength){
+					result.setResult(AtackStatus.MISS);
+				} else {
+					result.setResult(AtackStatus.HIT);
+				}
+
+
             } else {
                 result.setResult(AtackStatus.MISS);
             }
