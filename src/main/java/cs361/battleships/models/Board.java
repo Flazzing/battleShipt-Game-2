@@ -31,21 +31,9 @@ public class Board {
 				return false;
 			}
 		}
-	    // Get ships length based on 'kind'
-	    switch (ship.getKind()) {
-			case "MINESWEEPER":
-				length = 2;
-				break;
-			case "DESTROYER":
-				length = 3;
-				break;
-			case "BATTLESHIP":
-				length = 4;
-				break;
-			default:
-				// Got unexpected ship name
-				return false;
-		}
+	    // Get ships length
+        length = ship.getLength();
+
 	    // Add all target squares to list based on length of ship
 		for (int i = 0 ; i < length; i++) {
 			if (isVertical) {
