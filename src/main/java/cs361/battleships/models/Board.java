@@ -31,21 +31,9 @@ public class Board {
 				return false;
 			}
 		}
-	    // Get ships length based on 'kind'
-	    switch (ship.getKind()) {
-			case "MINESWEEPER":
-				length = 2;
-				break;
-			case "DESTROYER":
-				length = 3;
-				break;
-			case "BATTLESHIP":
-				length = 4;
-				break;
-			default:
-				// Got unexpected ship name
-				return false;
-		}
+	    // Get ships length
+        length = ship.getLength();
+
 	    // Add all target squares to list based on length of ship
 		for (int i = 0 ; i < length; i++) {
 			if (isVertical) {
@@ -91,7 +79,9 @@ public class Board {
 
         // Check if valid attack
         for (Result res : this.attacks) {
-            if (res.getLocation() == attackLoc) {
+            System.out.println(res.getLocation().getRow());
+			System.out.println(attackLoc.getRow());
+            if (res.getLocation().getRow() == attackLoc.getRow() && res.getLocation().getColumn() == attackLoc.getColumn()) {
                 result.setResult(AtackStatus.INVALID);
                 return result;
             }
@@ -101,7 +91,7 @@ public class Board {
 	        boolean hit = false;
 	        // Check if the attack hits a ship
             for (Square occSquare : ship.getOccupiedSquares()) {
-                if (occSquare == attackLoc) {
+                if (occSquare.getRow() == attackLoc.getRow() && occSquare.getColumn() == attackLoc.getColumn()) {
                     result.setShip(ship);
                     hit = true;
                     break;
@@ -154,6 +144,7 @@ public class Board {
                 result.setResult(AtackStatus.MISS);
             }
         }
+        this.attacks.add(result);
         return result;
 	}
 

@@ -9,13 +9,26 @@ public class Ship {
 
 	@JsonProperty private List<Square> occupiedSquares;
 	@JsonProperty private String kind;
+	private int length;
 
     public Ship() {
     	occupiedSquares = new ArrayList<>();
     }
 
 	public Ship(String kind) {
-	    this.kind = kind;
+		occupiedSquares = new ArrayList<>();
+        this.kind = kind;
+		switch (kind) {
+			case "MINESWEEPER":
+				this.length = 2;
+				break;
+			case "DESTROYER":
+				this.length = 3;
+				break;
+			case "BATTLESHIP":
+				this.length = 4;
+				break;
+		}
 	}
 
 	List<Square> getOccupiedSquares() {
@@ -26,5 +39,8 @@ public class Ship {
 	}
 	String getKind() {
     	return this.kind;
+	}
+	int getLength() {
+    	return this.length;
 	}
 }
