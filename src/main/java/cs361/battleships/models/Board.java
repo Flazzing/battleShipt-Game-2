@@ -103,28 +103,39 @@ public class Board {
 				int shipLength = 0;
 				for( Square s1 : result.getShip().getOccupiedSquares()){
 					shipLength++;
+					if ( attackLoc.getColumn() == s1.getColumn()
+							&& attackLoc.getRow() == s1.getRow() ){
+						hitCount++;
+					}
 					for( Result r : attacks){
 
 						if ( s1.getColumn() == r.getLocation().getColumn()
 								&& s1.getRow() == r.getLocation().getRow() ){
 							hitCount++;
-							System.out.println("this has been hit in the past");
+
 						}
 
-						if ( attackLoc.getColumn() == s1.getColumn()
-								&& attackLoc.getRow() == s1.getRow() ){
-							hitCount++;
-							System.out.println("hit now");
-						}
 					}
 
 				}
 
 				if(hitCount == shipLength){
-					result.setResult(AtackStatus.MISS);
+					int sunkShips = 0;
+					for(Result r : attacks){
+						if( r.getResult() == AtackStatus.SUNK){
+							sunkShips++;
+						}
+					}
+					if(sunkShips > 1){
+						result.setResult(AtackStatus.SURRENDER);
+					} else {
+						result.setResult(AtackStatus.SUNK);
+					}
+
 				} else {
 					result.setResult(AtackStatus.HIT);
 				}
+
 
             } else {
                 result.setResult(AtackStatus.MISS);
