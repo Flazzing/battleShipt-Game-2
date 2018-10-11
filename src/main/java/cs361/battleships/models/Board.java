@@ -79,20 +79,19 @@ public class Board {
 
         // Check if valid attack
         for (Result res : this.attacks) {
-            System.out.println(res.getLocation().getRow());
-			System.out.println(attackLoc.getRow());
             if (res.getLocation().getRow() == attackLoc.getRow() && res.getLocation().getColumn() == attackLoc.getColumn()) {
                 result.setResult(AtackStatus.INVALID);
                 return result;
             }
         }
         // Continue if attack is valid
+		boolean hit = false;
 	    for (Ship ship : this.ships) {
-	        boolean hit = false;
 	        // Check if the attack hits a ship
             for (Square occSquare : ship.getOccupiedSquares()) {
                 if (occSquare.getRow() == attackLoc.getRow() && occSquare.getColumn() == attackLoc.getColumn()) {
                     result.setShip(ship);
+                    result.setLocation(attackLoc);
                     hit = true;
                     break;
                 }
@@ -126,7 +125,6 @@ public class Board {
 				} else {
 					result.setResult(AtackStatus.HIT);
 				}
-
 
             } else {
                 result.setResult(AtackStatus.MISS);
