@@ -50,11 +50,11 @@ public class Game {
     }
 
     private char randCol() {
-        return (char)(Math.random() * (opponentsBoard.getCols() + 1) + 65);
+        return (char)(Math.random() * (opponentsBoard.getCols()) + 65);
     }
 
     private int randRow() {
-        return (int)((Math.random() * ((opponentsBoard.getRows() - 1)) + 1) + 1);
+        return (int)((Math.random() * opponentsBoard.getRows()) + 1);
     }
 
     private boolean randVertical() {
