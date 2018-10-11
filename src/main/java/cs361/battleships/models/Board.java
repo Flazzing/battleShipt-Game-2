@@ -46,9 +46,8 @@ public class Board {
 				// Got unexpected ship name
 				return false;
 		}
-		targetSquares.add(new Square(x, y));
 	    // Add all target squares to list based on length of ship
-		for (int i = 1 ; i < length; i++) {
+		for (int i = 0 ; i < length; i++) {
 			if (isVertical) {
 			    targetSquares.add(new Square(x + i, y));
 			} else {
