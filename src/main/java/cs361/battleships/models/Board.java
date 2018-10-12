@@ -96,9 +96,44 @@ public class Board {
                     break;
                 }
             }
+
             if (hit) {
-                // Ship has been hit, check if sunk
-				result.setResult(AtackStatus.HIT);
+
+				int hitCount = 0; //keeps track number of hits
+				int shipLength = 0;
+				for( Square s1 : result.getShip().getOccupiedSquares()){ //goes through each square in a ship
+					shipLength++;
+					if ( attackLoc.getColumn() == s1.getColumn() //if you just attacked it, increment hitcount
+							&& attackLoc.getRow() == s1.getRow() ){
+						hitCount++;
+					}
+					for( Result r : attacks){ //goes through each tile already attacked
+
+						if ( s1.getColumn() == r.getLocation().getColumn() //if it was attacked and is in ship increment hitcount
+								&& s1.getRow() == r.getLocation().getRow() ){
+							hitCount++;
+
+						}
+					}
+				}
+
+				if(hitCount == shipLength){ //if every tile in the ship has been hit, it was sunk or game is over
+					int sunkShips = 0;
+					for(Result r : attacks){ //go through each attack, count up the number of sunk ships
+						if( r.getResult() == AtackStatus.SUNK){
+							sunkShips++;
+						}
+					}
+					if(sunkShips > 1){ //if sunk ships was already at 2, now at three with current sink, end game
+						result.setResult(AtackStatus.SURRENDER);
+					} else { //otherwise, just sink the ship
+						result.setResult(AtackStatus.SUNK);
+					}
+
+				} else { //if you didnt sink a ship, its just a hit
+					result.setResult(AtackStatus.HIT);
+				}
+
             } else {
                 result.setResult(AtackStatus.MISS);
             }
