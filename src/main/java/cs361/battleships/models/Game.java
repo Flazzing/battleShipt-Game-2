@@ -49,15 +49,15 @@ public class Game {
         return true;
     }
 
-    private char randCol() {
+    char randCol() {
         return (char)(Math.random() * (opponentsBoard.getCols()) + 65);
     }
 
-    private int randRow() {
+    int randRow() {
         return (int)((Math.random() * opponentsBoard.getRows()) + 1);
     }
 
-    private boolean randVertical() {
+    boolean randVertical() {
         if (Math.random() > 0.5)
             return true;
         else

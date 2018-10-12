@@ -10,14 +10,25 @@ public class BoardTest {
     @Test
     public void testInvalidPlacement() {
         Board board = new Board();
-        assertFalse(board.placeShip(new Ship("MINESWEEPER"), 11, 'C', true));
+        for (int i = 0; i < 10; i ++) {
+            assertFalse(board.placeShip(new Ship("MINESWEEPER"), i+11, 'C', true)); // place some ships out of bounds
+        }
+        // Test overlapping
+        assertTrue(board.placeShip(new Ship("MINESWEEPER"), 1, 'C', true));
+        assertFalse(board.placeShip(new Ship("MINESWEEPER"), 1, 'C', true));
+
+        // Test more than one of same type
+        assertFalse(board.placeShip(new Ship("MINESWEEPER"), 1, 'D', true));
     }
 
     @Test
     public void testValidPlacement() {
         Board board = new Board();
-        assertTrue(board.placeShip(new Ship("MINESWEEPER"), 5, 'C', true));
+        assertTrue(board.placeShip(new Ship("MINESWEEPER"), 1, 'C', false)); // place some ships
+        assertTrue(board.placeShip(new Ship("BATTLESHIP"), 2, 'C', false)); // place some ships
+        assertTrue(board.placeShip(new Ship("DESTROYER"), 3, 'C', false)); // place some ships
     }
+
     @Test
     public void testAttackInvalid(){
         Board board = new Board();
