@@ -2,19 +2,40 @@
 <@layout.myLayout "Home page">
 
 <div id="container">
-    <table id="opponent" class="battleGrid">
-    </table>
+    <div class="board">
+        <table id="player" class="battleGrid">
+        </table>
+        <div id ="info_container">
+            <div id="place_buttons">
+                Place Ships<br>
+                <button id="place_minesweeper">Minesweeper</button>
+                <button id="place_destroyer">Destroyer</button>
+                <button id="place_battleship">Battleship</button><br>
+                <input type="checkbox" id="is_vertical">Vertical
+            </div>
+            <div id="sunk_ships">
+                Sunk Ships <br>
+                <button id="opp_minesweeper">Minesweeper</button>
+                <button id="opp_destroyer">Destroyer</button>
+                <button id="opp_battleship">Battleship</button>
+            </div>
 
-    <table id="player" class="battleGrid">
-    </table>
+        </div>
+    </div>
+
+    <div class="board">
+        <table id="opponent" class="battleGrid">
+        </table>
+        <div id="last_action">
+            <div style="text-align:center;font-size:25px;">
+                <span id="last_action_header;">Last Action</span>
+                <hr>
+            </div>
+            <p id="last_action_text"></p>
+        </div>
+    </div>
+
 </div>
-
-<ul>
-    <li><button id="place_minesweeper">Place Minesweeper</button></li>
-    <li><button id="place_destroyer">Place Destroyer</button></li>
-    <li><button id="place_battleship">Place Battleship</button></li>
-    <li><input type="checkbox" id="is_vertical">Vertical</input></li>
-</ul>
 
 <script type="text/javascript" src="/assets/game.js"></script>
 <script>
