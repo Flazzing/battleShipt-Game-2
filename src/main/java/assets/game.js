@@ -64,17 +64,17 @@ function markHits(board, elementId, surrenderText) {
             else if (attack.result === "HIT") {
                 document.getElementById("last_action_text").innerHTML = "Hit at (" + attack.location.column + ", " + (10 - attack.location.row) + ")";
             }
-            else if (attack.result === "SUNK") {
+            else if (attack.result === "SUNK" || attack.result === "SURRENDER") {
                 document.getElementById("last_action_text").innerHTML = "Sunk enemy " + attack.ship.kind;
                 if (attack.ship.kind == "MINESWEEPER") {
                     document.getElementById("opp_minesweeper").style.backgroundColor = "black";
                     document.getElementById("opp_minesweeper").style.color = "white";
                 } else if (attack.ship.kind == "DESTROYER") {
                     document.getElementById("opp_destroyer").style.backgroundColor = "black";
-                    document.getElementById("opp_minesweeper").style.color = "white";
+                    document.getElementById("opp_destroyer").style.color = "white";
                 } else if (attack.ship.kind == "BATTLESHIP") {
                     document.getElementById("opp_battleship").style.backgroundColor = "black";
-                    document.getElementById("opp_minesweeper").style.color = "white";
+                    document.getElementById("opp_battleship").style.color = "white";
                 }
             }
         }
