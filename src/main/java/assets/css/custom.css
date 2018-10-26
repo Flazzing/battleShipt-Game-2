@@ -30,12 +30,17 @@ h1 {
     border-spacing: 0px;
 
 }
+
+.numcell{
+    padding-right: 10px;
+}
+
 #hiddencell {
     font-size: 30px;
     font-weight: bold;
     text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
-    padding-left: 20px;
-    padding-right: 15px;
+    text-align: center;
+    width: 30px;
     background: none;
     border: none;
 }

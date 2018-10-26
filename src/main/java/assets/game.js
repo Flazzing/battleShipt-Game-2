@@ -11,6 +11,7 @@ function makeGrid(table, isPlayer) {
         let newContent = document.createTextNode(10-i);
         number.appendChild(newContent);
         number.setAttribute("id", "hiddencell");
+        number.classList.add("numcell");
         row.appendChild(number);
         for (j=0; j<10; j++) {
             let column = document.createElement('td');
