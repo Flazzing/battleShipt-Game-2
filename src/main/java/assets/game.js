@@ -7,13 +7,32 @@ var vertical;
 function makeGrid(table, isPlayer) {
     for (i=0; i<10; i++) {
         let row = document.createElement('tr');
+        let number = document.createElement("nums");
+        let newContent = document.createTextNode(10-i);
+        number.appendChild(newContent);
+        number.setAttribute("id", "hiddencell");
+        row.appendChild(number);
         for (j=0; j<10; j++) {
             let column = document.createElement('td');
+            column.setAttribute("id", "normcell");
             column.addEventListener("click", cellClick);
             row.appendChild(column);
         }
+
         table.appendChild(row);
     }
+    let lastrow = document.createElement('tr');
+    let empty = document.createElement("nums");
+    lastrow.appendChild(empty);
+
+    for(i = 0; i < 10; i++){
+        let letter = document.createElement("td");
+        let newContent = document.createTextNode(String.fromCharCode(i+97));
+        letter.appendChild(newContent);
+        letter.setAttribute("id", "hiddencell");
+        lastrow.appendChild(letter);
+     }
+     table.appendChild(lastrow);
 }
 
 function markHits(board, elementId, surrenderText) {
