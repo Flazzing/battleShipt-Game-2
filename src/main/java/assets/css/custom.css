@@ -3,6 +3,19 @@
 * {
     font-family: "Helvetica", Helvetica, sans-serif;
 }
+header{
+    height: 115px;
+    border: #cce6ff;
+    background-image: url("Battleship.png");
+    font-style:light;
+    margin: 5px;
+    font-size: 100px;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+}
 
 #container {
     display: flex;
@@ -65,7 +78,7 @@ body{
 }
 h1 {
     margin: 5px;
-    font-size: 100px;
+    font-size: 25px;
     display: flex;
     justify-content: center;
     margin-left: auto;
