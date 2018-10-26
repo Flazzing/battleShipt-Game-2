@@ -1,19 +1,27 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
+#container {
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
 
 .battleGrid {
-    border: 1px solid black;
+    padding: 20px;
     border-spacing: 0px;
 }
 
 .battleGrid tr {
     border: 1px solid black;
-    height: 30px;
+    height: 53px;
 }
 
 .battleGrid td {
     border: 1px solid black;
-    width: 30px;
+    width: 60px;
 }
 
 td:hover {
