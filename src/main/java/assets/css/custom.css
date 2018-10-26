@@ -92,8 +92,8 @@ h1 {
     border: none;
 }
 
-#normcell{
-    opacity: 0.6;
+.normiecell{
+    opacity: 0.4;
     background: white;
 }
 
@@ -110,26 +110,32 @@ h1 {
 
 td:hover {
     background-color: gray;
+
 }
 
 .placed {
     background-color: gray;
+    opacity: 1;
 }
 
 .occupied {
     background-color: black;
+    opacity: 1;
 }
 
 .hit {
     background-color: orange;
+    opacity: .9;
 }
 
 .sink {
     background-color: red;
+    opacity: .9;
 }
 
 .miss {
     background-color: blue;
+    opacity: .9;
 }
 button {
     padding: 10px;
