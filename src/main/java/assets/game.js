@@ -65,7 +65,9 @@ function markHits(board, elementId, surrenderText) {
                 document.getElementById("last_action_text").innerHTML = "Hit at (" + attack.location.column + ", " + (10 - attack.location.row) + ")";
             }
             else if (attack.result === "SUNK" || attack.result === "SURRENDER") {
-                document.getElementById("last_action_text").innerHTML = "Sunk enemy " + attack.ship.kind;
+                if(attack.result === "SUNK"){
+                    document.getElementById("last_action_text").innerHTML = "Sunk enemy " + attack.ship.kind;
+                }
                 if (attack.ship.kind == "MINESWEEPER") {
                     document.getElementById("opp_minesweeper").style.backgroundColor = "black";
                     document.getElementById("opp_minesweeper").style.color = "white";
