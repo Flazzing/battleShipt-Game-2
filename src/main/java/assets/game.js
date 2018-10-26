@@ -36,18 +36,48 @@ function makeGrid(table, isPlayer) {
 }
 
 function markHits(board, elementId, surrenderText) {
+    document.getElementById("last_action_text").style.color = "black";
     board.attacks.forEach((attack) => {
         let className;
-        if (attack.result === "MISS")
+        if (attack.result === "MISS") {
             className = "miss";
-        else if (attack.result === "HIT")
+        }
+        else if (attack.result === "HIT") {
             className = "hit";
-        else if (attack.result === "SUNK")
-            className = "hit"
-        else if (attack.result === "SURRENDER")
-            alert(surrenderText);
+        }
+        else if (attack.result === "SUNK") {
+            className = "sink";
+        }
+        else if (attack.result === "SURRENDER") {
+            document.getElementById("last_action_text").innerHTML = surrenderText;
+            className = "sink";
+        }
         document.getElementById(elementId).rows[attack.location.row-1].cells[attack.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
     });
+    if (elementId == "opponent") {
+        if (board.attacks[board.attacks.length - 1] != undefined) {
+            let attack = board.attacks[board.attacks.length - 1]
+            if (attack.result === "MISS") {
+                document.getElementById("last_action_text").innerHTML = "Miss at (" + attack.location.column + ", " + (10 - attack.location.row) + ")";
+            }
+            else if (attack.result === "HIT") {
+                document.getElementById("last_action_text").innerHTML = "Hit at (" + attack.location.column + ", " + (10 - attack.location.row) + ")";
+            }
+            else if (attack.result === "SUNK") {
+                document.getElementById("last_action_text").innerHTML = "Sunk enemy " + attack.ship.kind;
+                if (attack.ship.kind == "MINESWEEPER") {
+                    document.getElementById("opp_minesweeper").style.backgroundColor = "black";
+                    document.getElementById("opp_minesweeper").style.color = "white";
+                } else if (attack.ship.kind == "DESTROYER") {
+                    document.getElementById("opp_destroyer").style.backgroundColor = "black";
+                    document.getElementById("opp_minesweeper").style.color = "white";
+                } else if (attack.ship.kind == "BATTLESHIP") {
+                    document.getElementById("opp_battleship").style.backgroundColor = "black";
+                    document.getElementById("opp_minesweeper").style.color = "white";
+                }
+            }
+        }
+    }
 }
 
 function redrawGrid() {
@@ -108,8 +138,14 @@ function sendXhr(method, url, data, handler) {
     var req = new XMLHttpRequest();
     req.addEventListener("load", function(event) {
         if (req.status != 200) {
-            alert("Cannot complete the action");
+            document.getElementById("last_action_text").innerHTML = "ERROR";
+            document.getElementById("last_action_text").style.color = "red";
+            document.getElementById("last_action").style.border = "1px solid red";
             return;
+        } else {
+            document.getElementById("last_action_text").innerHTML = "";
+            document.getElementById("last_action").style.border = "1px solid black";
+
         }
         handler(JSON.parse(req.responseText));
     });
