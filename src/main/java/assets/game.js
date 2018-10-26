@@ -130,6 +130,7 @@ function initGame() {
     makeGrid(document.getElementById("opponent"), false);
     makeGrid(document.getElementById("player"), true);
     document.getElementById("place_minesweeper").addEventListener("click", function(e) {
+        alert("test");
         shipType = "MINESWEEPER";
        registerCellListener(place(2));
     });
