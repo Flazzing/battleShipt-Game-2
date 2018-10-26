@@ -39,3 +39,15 @@ td:hover {
 .miss {
     background-color: blue;
 }
+button {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+button:hover {
+    background-color: gray;
+    color: white;
+}
+button:active {
+    background-color: black;
+}
