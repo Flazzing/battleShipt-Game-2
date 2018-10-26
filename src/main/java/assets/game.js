@@ -8,13 +8,14 @@ function makeGrid(table, isPlayer) {
     for (i=0; i<10; i++) {
         let row = document.createElement('tr');
         let number = document.createElement("nums");
-        let newContent = document.createTextNode(10-i);
+        let newContent = document.createTextNode(9-i);
         number.appendChild(newContent);
         number.setAttribute("id", "hiddencell");
+        number.classList.add("numcell");
         row.appendChild(number);
         for (j=0; j<10; j++) {
             let column = document.createElement('td');
-            column.setAttribute("id", "normcell");
+            column.classList.add("normiecell");
             column.addEventListener("click", cellClick);
             row.appendChild(column);
         }
@@ -63,17 +64,17 @@ function markHits(board, elementId, surrenderText) {
             else if (attack.result === "HIT") {
                 document.getElementById("last_action_text").innerHTML = "Hit at (" + attack.location.column + ", " + (10 - attack.location.row) + ")";
             }
-            else if (attack.result === "SUNK") {
+            else if (attack.result === "SUNK" || attack.result === "SURRENDER") {
                 document.getElementById("last_action_text").innerHTML = "Sunk enemy " + attack.ship.kind;
                 if (attack.ship.kind == "MINESWEEPER") {
                     document.getElementById("opp_minesweeper").style.backgroundColor = "black";
                     document.getElementById("opp_minesweeper").style.color = "white";
                 } else if (attack.ship.kind == "DESTROYER") {
                     document.getElementById("opp_destroyer").style.backgroundColor = "black";
-                    document.getElementById("opp_minesweeper").style.color = "white";
+                    document.getElementById("opp_destroyer").style.color = "white";
                 } else if (attack.ship.kind == "BATTLESHIP") {
                     document.getElementById("opp_battleship").style.backgroundColor = "black";
-                    document.getElementById("opp_minesweeper").style.color = "white";
+                    document.getElementById("opp_battleship").style.color = "white";
                 }
             }
         }
