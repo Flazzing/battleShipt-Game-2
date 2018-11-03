@@ -7,16 +7,20 @@ public class Board {
 
     private List<Ship> ships;
     private List<Result> attacks;
+    private List<Square> sonars;
     private int rows;
     private int cols;
+    private int numSonars;
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Board() {
 	    this.rows = 10;
 	    this.cols = 10;
+	    this.numSonars = 2;
 	    this.ships = new ArrayList<Ship>();
 		this.attacks = new ArrayList<Result>();
+		this.sonars = new ArrayList<Square>();
 	}
 
 	/*
@@ -142,6 +146,40 @@ public class Board {
         return result;
 	}
 
+	public boolean sonar(int x, char y, int numSonars) {
+		if (!checkSonarCondition() || numSonars == 0)
+			return false;
+	    int radius = 2;
+	    List<Square> squares = new ArrayList<>();
+	    // Add circle pattern to squares
+	    for (int i = 0; i < radius+1; i++) {
+			squares.add(new Square(x+i, y));
+			squares.add(new Square(x-i, y));
+			squares.add(new Square(x, (char)((int)y+i)));
+			squares.add(new Square(x, (char)((int)y-i)));
+			squares.add(new Square(x-1, (char)((int)y-1)));
+			squares.add(new Square(x-1, (char)((int)y+1)));
+			squares.add(new Square(x+1, (char)((int)y-1)));
+			squares.add(new Square(x+1, (char)((int)y+1)));
+		}
+	    for (Square s : squares) {
+	    	// Check row and validity
+			if (s.getRow() <= this.rows && s.getRow() > 0 && ((int)s.getColumn() - 65) < this.cols && ((int)s.getColumn() - 65) >= 0) {
+				this.sonars.add(s);
+			}
+		}
+		return true;
+	}
+
+	private boolean checkSonarCondition() {
+	    for (Result r : this.attacks) {
+	    	if (r.getResult() == AtackStatus.SUNK) {
+	    		return true;
+			}
+		}
+		return false;
+	}
+
 	public List<Ship> getShips() {
 		return this.ships;
 	}
@@ -156,6 +194,14 @@ public class Board {
 
 	public void setAttacks(List<Result> attacks) {
 	    this.attacks = attacks;
+	}
+
+	public List<Square> getSonars() {
+		return this.sonars;
+	}
+
+	public void setSonars(List<Square> sonars) {
+		this.sonars = sonars;
 	}
 
 	public int getRows() {

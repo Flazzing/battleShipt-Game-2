@@ -49,6 +49,13 @@ public class Game {
         return true;
     }
 
+    public boolean sonar(int x, char y, int numSonars) {
+        boolean successful = opponentsBoard.sonar(x, y, numSonars);
+        if (!successful)
+            return false;
+        return true;
+    }
+
     char randCol() {
         return (char)(Math.random() * (opponentsBoard.getCols()) + 65);
     }

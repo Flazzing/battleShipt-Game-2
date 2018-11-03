@@ -1,5 +1,7 @@
 var isSetup = true;
+var isSonar = false;
 var placedShips = 0;
+var numSonars = 2;
 var game;
 var shipType;
 var vertical;
@@ -95,13 +97,24 @@ function redrawGrid() {
     game.playersBoard.ships.forEach((ship) => ship.occupiedSquares.forEach((square) => {
         document.getElementById("player").rows[square.row-1].cells[square.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add("occupied");
     }));
+    // Draw sonar squares
+    game.opponentsBoard.sonars.forEach((square) => {
+        document.getElementById("opponent").rows[square.row-1].cells[square.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add("gray");
+    });
+    // Check for occupied squares in sonar
+    game.opponentsBoard.ships.forEach((ship) => ship.occupiedSquares.forEach((square) => game.opponentsBoard.sonars.forEach((sonar) => {
+        if (square.row == sonar.row && (square.column.charCodeAt(0) - 'A'.charCodeAt(0)) == (sonar.column.charCodeAt(0) - 'A'.charCodeAt(0))) {
+            document.getElementById("opponent").rows[square.row-1].cells[square.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.remove("gray");
+            document.getElementById("opponent").rows[square.row-1].cells[square.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add("occupied");
+        }
+    })));
     markHits(game.opponentsBoard, "opponent", "You won the game");
     markHits(game.playersBoard, "player", "You lost the game");
 }
 
 var oldListener;
-function registerCellListener(f) {
-    let el = document.getElementById("player");
+function registerCellListener(f, board) {
+    let el = document.getElementById(board);
     for (i=0; i<10; i++) {
         for (j=0; j<10; j++) {
             let cell = el.rows[i].cells[j];
@@ -117,7 +130,6 @@ function registerCellListener(f) {
 function cellClick() {
     let row = this.parentNode.rowIndex + 1;
     let col = String.fromCharCode(this.cellIndex + 65);
-    // console.log(col);
     if (isSetup) {
         sendXhr("POST", "/place", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {
             game = data;
@@ -126,10 +138,18 @@ function cellClick() {
             placedShips++;
             if (placedShips == 3) {
                 isSetup = false;
-                registerCellListener((e) => {});
+                //registerCellListener((e) => {});
             }
         });
-    } else {
+    } else if (isSonar) {
+        isSonar = false;
+        sendXhr("POST", "/sonar", {game: game, x: row, y: col, numSonars: numSonars}, function(data) {
+            numSonars--;
+            game = data;
+            redrawGrid();
+        })
+    }
+    else {
         sendXhr("POST", "/attack", {game: game, x: row, y: col}, function(data) {
             game = data;
             redrawGrid();
@@ -141,6 +161,8 @@ function sendXhr(method, url, data, handler) {
     var req = new XMLHttpRequest();
     req.addEventListener("load", function(event) {
         if (req.status != 200) {
+            // Redraw to clear any outstanding event handlers
+            redrawGrid();
             document.getElementById("last_action_text").innerHTML = "ERROR";
             document.getElementById("last_action_text").style.color = "red";
             document.getElementById("last_action").style.border = "1px solid red";
@@ -184,20 +206,55 @@ function place(size) {
     }
 }
 
+function sonar() {
+    return function() {
+        let row = this.parentNode.rowIndex;
+        let col = this.cellIndex;
+        let radius = 2;
+        let table = document.getElementById("opponent");
+        let cells = [];
+        for (let i = 0; i <= radius; i++) {
+            if (table.rows[row+i] !== undefined)
+                cells.push(table.rows[row+i].cells[col]);
+            if (table.rows[row-i] !== undefined)
+                cells.push(table.rows[row-i].cells[col]);
+            if (table.rows[row-1] !== undefined) {
+                cells.push(table.rows[row-1].cells[col-1]);
+                cells.push(table.rows[row-1].cells[col+1]);
+            }
+            if (table.rows[row+1] !== undefined) {
+                cells.push(table.rows[row+1].cells[col-1]);
+                cells.push(table.rows[row+1].cells[col+1]);
+            }
+            cells.push(table.rows[row].cells[col+i]);
+            cells.push(table.rows[row].cells[col-i]);
+        }
+        cells.forEach(function(e) {
+            if (e !== undefined) {
+                e.classList.toggle("placed");
+            }
+        });
+        isSonar = true;
+    }
+}
+
 function initGame() {
     makeGrid(document.getElementById("opponent"), false);
     makeGrid(document.getElementById("player"), true);
     document.getElementById("place_minesweeper").addEventListener("click", function(e) {
         shipType = "MINESWEEPER";
-       registerCellListener(place(2));
+        registerCellListener(place(2), "player");
     });
     document.getElementById("place_destroyer").addEventListener("click", function(e) {
         shipType = "DESTROYER";
-       registerCellListener(place(3));
+        registerCellListener(place(3), "player");
     });
     document.getElementById("place_battleship").addEventListener("click", function(e) {
         shipType = "BATTLESHIP";
-       registerCellListener(place(4));
+        registerCellListener(place(4), "player");
+    });
+    document.getElementById("sonar_button").addEventListener("click", function(e) {
+        registerCellListener(sonar(), "opponent");
     });
     sendXhr("GET", "/game", {}, function(data) {
         game = data;
