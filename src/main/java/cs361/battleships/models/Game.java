@@ -50,10 +50,7 @@ public class Game {
     }
 
     public boolean sonar(int x, char y, int numSonars) {
-        boolean successful = opponentsBoard.sonar(x, y, numSonars);
-        if (!successful)
-            return false;
-        return true;
+        return opponentsBoard.sonar(x, y, numSonars);
     }
 
     char randCol() {
