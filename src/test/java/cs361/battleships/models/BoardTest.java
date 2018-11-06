@@ -47,11 +47,11 @@ public class BoardTest {
 
         board.placeShip(new Ship("DESTROYER"), 5, 'B', true);
         assertTrue( board.attack(5, 'B').getResult() == AtackStatus.HIT ); //Testing sink with misses in between
-        assertTrue( board.attack(6, 'B').getResult() == AtackStatus.HIT );
+        assertTrue( board.attack(6, 'B').getResult() == AtackStatus.MISS );
         board.attack(5, 'A');
         board.attack(1, 'A');
         board.attack(3, 'B');
-        assertTrue( board.attack(7, 'B').getResult() == AtackStatus.SUNK );
+        assertTrue( board.attack(6, 'B').getResult() == AtackStatus.SUNK );
     }
 
     @Test
@@ -60,7 +60,7 @@ public class BoardTest {
         board.placeShip(new Ship("MINESWEEPER"), 5, 'C', true); //place 2 ships, miss 1 attack hit the next 2
         board.placeShip(new Ship("BATTLESHIP"),  4, 'E', true);
         assertTrue( board.attack(5, 'D').getResult() == AtackStatus.MISS); //miss
-        assertFalse( board.attack(5, 'E').getResult() == AtackStatus.MISS); //hit battleship
+        assertFalse( board.attack(4, 'E').getResult() == AtackStatus.MISS); //hit battleship
         assertFalse( board.attack(6, 'C').getResult() == AtackStatus.MISS); //hit minesweeper
     }
 
@@ -76,11 +76,11 @@ public class BoardTest {
         board.attack(4, 'E'); //sink battleship
         board.attack(5, 'E');
         board.attack(6, 'E');
-        board.attack(7, 'E');
+        board.attack(5, 'E');
 
         board.attack(4, 'F'); //sink destroyer
         board.attack(5, 'F');
-        assertTrue( board.attack(6, 'F').getResult() == AtackStatus.SURRENDER ); //should end game on
+        assertTrue( board.attack(5, 'F').getResult() == AtackStatus.SURRENDER ); //should end game on
                                                                                                 // last destroyer hit
     }
 }
