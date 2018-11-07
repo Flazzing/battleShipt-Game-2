@@ -2,7 +2,7 @@ package cs361.battleships.models;
 
 public class Destroyer extends Ship {
 
-    Square captainsQuarters;
+    private Square captainsQuarters;
 
     public Destroyer()
     {
