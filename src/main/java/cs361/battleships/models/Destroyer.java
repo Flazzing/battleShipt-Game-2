@@ -7,7 +7,7 @@ public class Destroyer extends Ship {
     public Destroyer()
     {
         super();
-        this.captainsQuarters = new Square;
+        this.captainsQuarters = new Square();
         this.captainsQuarters.setColumn(super.getOccupiedSquares().get(1).getColumn());
         this.captainsQuarters.setRow(super.getOccupiedSquares().get(1).getRow());
     }
