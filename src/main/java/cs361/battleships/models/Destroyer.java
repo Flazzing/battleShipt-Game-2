@@ -8,6 +8,9 @@ public class Destroyer extends Ship {
     {
         super();
         this.captainsQuarters = new Square();
+    }
+    public void setLocation()
+    {
         this.captainsQuarters.setColumn(super.getOccupiedSquares().get(1).getColumn());
         this.captainsQuarters.setRow(super.getOccupiedSquares().get(1).getRow());
     }
