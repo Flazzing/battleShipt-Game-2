@@ -2,8 +2,21 @@ package cs361.battleships.models;
 
 public class Battleship extends Ship {
 
-    public Battleship()
-    {
+    private Square captainquarters;
 
+
+    public Battleship (){
+        super();
+        this.captainquarters = new Square();
     }
+
+    public void setLocation(){
+        this.captainquarters.setColumn(super.getOccupiedSquares().get(2).getColumn());
+        this.captainquarters.setRow(super.getOccupiedSquares().get(2).getRow());
+    }
+
+    public Square getCaptainquarters() {
+        return this.captainquarters;
+    }
+
 }
