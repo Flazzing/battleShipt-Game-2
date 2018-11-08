@@ -3,11 +3,12 @@ package cs361.battleships.models;
 public class Battleship extends Ship {
 
     private Square captainsQuarters;
-
+    private int length;
 
     public Battleship (){
         super();
         this.captainsQuarters = new Square();
+        this.length = 4;
     }
 
     public void setLocation(){
