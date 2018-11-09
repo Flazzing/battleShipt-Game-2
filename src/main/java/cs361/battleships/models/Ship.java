@@ -18,8 +18,19 @@ public class Ship {
 	public Ship(String kind) {
 		occupiedSquares = new ArrayList<>();
         this.kind = kind;
+		switch (kind) {
+			case "MINESWEEPER":
+				this.length = 2;
+				break;
+			case "DESTROYER":
+				this.length = 3;
+				break;
+			case "BATTLESHIP":
+				this.length = 4;
+				break;
 		}
 	}
+
 
 	List<Square> getOccupiedSquares() {
 	    return this.occupiedSquares;
@@ -33,4 +44,5 @@ public class Ship {
 	int getLength() {
     	return this.length;
 	}
+	void setLength(int x){this.length=x;}
 }
