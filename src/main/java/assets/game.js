@@ -41,6 +41,7 @@ function makeGrid(table, isPlayer) {
 function markHits(board, elementId, surrenderText) {
     document.getElementById("last_action_text").style.color = "black";
     board.attacks.forEach((attack) => {
+        console.log(attack);
         let className;
         if (attack.result === "MISS") {
             className = "miss";
