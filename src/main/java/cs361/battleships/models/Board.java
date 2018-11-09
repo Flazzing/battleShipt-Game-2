@@ -149,14 +149,11 @@ public class Board {
 							}
 						}
 						if(!displayed){
-							System.out.println("a tile is not displayed yet");
 							Result fillship = new Result();
 							fillship.setShip(result.getShip());
-							fillship.setLocation(attackLoc);
+							fillship.setLocation(s);
 							fillship.setResult(AtackStatus.HIT);
-							System.out.println(this.attacks);
 							this.attacks.add(fillship);
-							System.out.println(this.attacks);
 						}
 					}
 					for(Result r : attacks){ //go through each attack, count up the number of sunk ships

@@ -41,7 +41,6 @@ function makeGrid(table, isPlayer) {
 function markHits(board, elementId, surrenderText) {
     document.getElementById("last_action_text").style.color = "black";
     board.attacks.forEach((attack) => {
-        console.log(attack);
         let className;
         if (attack.result === "MISS") {
             className = "miss";
@@ -95,7 +94,6 @@ function redrawGrid() {
         return;
     }
 
-    console.log(game);
     game.playersBoard.ships.forEach((ship) => ship.occupiedSquares.forEach((square) => {
         document.getElementById("player").rows[square.row-1].cells[square.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add("occupied");
     }));
