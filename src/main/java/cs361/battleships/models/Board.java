@@ -140,6 +140,22 @@ public class Board {
 
 				if(sunk == 1){ //if every tile in the ship has been hit, it was sunk or game is over
 					int sunkShips = 0;
+					for(Square s : result.getShip().getOccupiedSquares()) {
+						boolean displayed = false;
+						for (Result r : attacks) {
+							if((r.getLocation().getColumn() == s.getColumn() && r.getLocation().getRow() == s.getRow())
+							|| (s.getColumn() == attackLoc.getColumn() && s.getRow() == attackLoc.getRow())){
+								displayed = true;
+							}
+						}
+						if(!displayed){
+							Result fillship = new Result();
+							fillship.setShip(result.getShip());
+							fillship.setLocation(s);
+							fillship.setResult(AtackStatus.HIT);
+							this.attacks.add(fillship);
+						}
+					}
 					for(Result r : attacks){ //go through each attack, count up the number of sunk ships
 						if( r.getResult() == AtackStatus.SUNK){
 							sunkShips++;
