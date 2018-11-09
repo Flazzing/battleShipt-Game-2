@@ -21,7 +21,7 @@ public class Game {
         if (!successful)
             return false;
         boolean opponentPlacedSuccessfully;
-        Ship oppShip = new Ship(ship.getKind());
+        Ship oppShip = new Minesweeper();
         do {
             // AI places random ships, so it might try and place overlapping ships
             // let it try until it gets it right
@@ -29,13 +29,13 @@ public class Game {
         } while (!opponentPlacedSuccessfully);
         return true;
     }
-    
+
     public boolean placeDestroyer(Destroyer ship, int x, char y, boolean isVertical) {
         boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
         if (!successful)
             return false;
         boolean opponentPlacedSuccessfully;
-        Ship oppShip = new Ship(ship.getKind());
+        Ship oppShip = new Destroyer();
         do {
             // AI places random ships, so it might try and place overlapping ships
             // let it try until it gets it right
@@ -49,7 +49,7 @@ public class Game {
         if (!successful)
             return false;
         boolean opponentPlacedSuccessfully;
-        Ship oppShip = new Ship(ship.getKind());
+        Ship oppShip = new Battleship();
         do {
             // AI places random ships, so it might try and place overlapping ships
             // let it try until it gets it right
