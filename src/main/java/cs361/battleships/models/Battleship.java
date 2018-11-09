@@ -1,5 +1,7 @@
 package cs361.battleships.models;
 
+import java.util.ArrayList;
+
 public class Battleship extends Ship {
 
     private Square captainquarters;
@@ -9,6 +11,7 @@ public class Battleship extends Ship {
         super();
         super.setLength(4);
         this.captainquarters = new Square();
+        super.setFloatstatus(true);
     }
 
     public void setLocation(){

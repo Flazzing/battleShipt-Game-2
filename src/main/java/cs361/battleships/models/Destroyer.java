@@ -7,6 +7,7 @@ public class Destroyer extends Ship {
     {
         super();
         this.captainsQuarters = new Square();
+        super.setFloatstatus(true);
         super.setLength(3);
     }
     public void setLocation()
