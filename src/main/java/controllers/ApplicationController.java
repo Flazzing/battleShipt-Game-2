@@ -20,20 +20,20 @@ public class ApplicationController {
 
     public Result placeShip(Context context, PlacementGameAction g) {
         Game game = g.getGame();
-        //Ship ship = new Ship(g.getShipType());
+        Ship ship = new Ship(g.getShipType());
         if (g.getShipType() == "MINESWEEPER")
         {
-            Ship ship = new Minesweeper();
+            ship = new Minesweeper();
         }
         else if (g.getShipType() == "DESTROYER")
         {
-            Ship ship = new Destroyer();
+            ship = new Destroyer();
         }
         else if (g.getShipType() == "BATTLESHIP")
         {
-            Ship ship = new Battleship();
+            ship = new Battleship();
         }
-        
+
         boolean result = game.placeShip(ship, g.getActionRow(), g.getActionColumn(), g.isVertical());
         if (result) {
             return Results.json().render(game);
