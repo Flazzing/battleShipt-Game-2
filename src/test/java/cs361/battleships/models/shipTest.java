@@ -11,13 +11,13 @@ import static org.junit.Assert.assertFalse;
 public class shipTest {
     @Test
     public void testLengthKind() {
-        Ship ship = new Ship("MINESWEEPER");
+        Ship ship = new Minesweeper();
         assertTrue(ship.getKind() == "MINESWEEPER");
         assertTrue(ship.getLength() == 2);
-        ship = new Ship("DESTROYER");
+        ship = new Destroyer();
         assertTrue(ship.getKind() == "DESTROYER");
         assertTrue(ship.getLength() == 3);
-        ship = new Ship("BATTLESHIP");
+        ship = new Battleship();
         assertTrue(ship.getKind() == "BATTLESHIP");
         assertTrue(ship.getLength() == 4);
     }
@@ -55,9 +55,9 @@ public class shipTest {
 
         ship.setOccupiedSquares(sqs);
 
-        ((Battleship) ship).setLocation();
-        System.out.println("Row: " + ((Battleship) ship).getCaptainsQuarters().getRow());
-        System.out.println("Column: " + ((Battleship) ship).getCaptainsQuarters().getColumn());
+        ship.setCaptainsQuarters();
+        assertTrue(ship.getCaptainsQuarters() == ship.getOccupiedSquares().get(1));
+        assertTrue(ship.getArmored() == 1);
 
     }
 
@@ -68,13 +68,13 @@ public class shipTest {
         sqs.add(new Square(1, 'A'));
         sqs.add(new Square(2, 'A'));
         sqs.add(new Square(3, 'A'));
-        sqs.add(new Square(4, 'A'));
 
         ship.setOccupiedSquares(sqs);
 
-        ((Battleship) ship).setLocation();
-        System.out.println("Row: " + ((Battleship) ship).getCaptainsQuarters().getRow());
-        System.out.println("Column: " + ((Battleship) ship).getCaptainsQuarters().getColumn());
+
+        ship.setCaptainsQuarters();
+        assertTrue(ship.getCaptainsQuarters() == ship.getOccupiedSquares().get(1));
+        assertTrue(ship.getArmored() == 1);
 
     }
 
@@ -86,12 +86,42 @@ public class shipTest {
         sqs.add(new Square(1, 'A'));
         sqs.add(new Square(1, 'B'));
         sqs.add(new Square(1, 'C'));
-        sqs.add(new Square(1, 'D'));
 
         ship.setOccupiedSquares(sqs);
-        ((Destroyer) ship).setLocation();
-        System.out.println("Row: " + ((Destroyer) ship).getCaptainsQuarters().getRow());
-        System.out.println("Column: " + ((Destroyer) ship).getCaptainsQuarters().getColumn());
+
+        ship.setCaptainsQuarters();
+        assertTrue(ship.getCaptainsQuarters() == ship.getOccupiedSquares().get(1));
+        assertTrue(ship.getArmored() == 1);
+    }
+
+    @Test
+    public void testMinesweeperVerticalCaptainQuarter()
+    {
+        Ship ship = new Minesweeper();
+        ArrayList<Square> sqs = new ArrayList<>();
+        sqs.add(new Square(1, 'A'));
+        sqs.add(new Square(2, 'A'));
+
+        ship.setOccupiedSquares(sqs);
+
+        ship.setCaptainsQuarters();
+        assertTrue(ship.getCaptainsQuarters() == ship.getOccupiedSquares().get(1));
+        assertTrue(ship.getArmored() == 0);
+    }
+
+    @Test
+    public void testMinesweeperHorizontalCaptainQuarter()
+    {
+        Ship ship = new Minesweeper();
+        ArrayList<Square> sqs = new ArrayList<>();
+        sqs.add(new Square(1, 'A'));
+        sqs.add(new Square(1, 'B'));
+
+        ship.setOccupiedSquares(sqs);
+
+        ship.setCaptainsQuarters();
+        assertTrue(ship.getCaptainsQuarters() == ship.getOccupiedSquares().get(1));
+        assertTrue(ship.getArmored() == 0);
     }
 
     @Test
@@ -106,8 +136,9 @@ public class shipTest {
 
         ship.setOccupiedSquares(sqs);
 
-        ((Destroyer) ship).setLocation();
-        System.out.println("Row: " + ((Destroyer) ship).getCaptainsQuarters().getRow());
-        System.out.println("Column: " + ((Destroyer) ship).getCaptainsQuarters().getColumn());
+
+        ship.setCaptainsQuarters();
+        assertTrue(ship.getCaptainsQuarters() == ship.getOccupiedSquares().get(1));
+        assertTrue(ship.getArmored() == 1);
     }
 }

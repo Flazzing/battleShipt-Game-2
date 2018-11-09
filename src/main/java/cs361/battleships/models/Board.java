@@ -37,7 +37,6 @@ public class Board {
 		}
 	    // Get ships length
         length = ship.getLength();
-
 	    // Add all target squares to list based on length of ship
 		for (int i = 0 ; i < length; i++) {
 			if (isVertical) {
@@ -81,13 +80,7 @@ public class Board {
         Square attackLoc = new Square(x, y);
         result.setLocation(attackLoc);
 
-        // Check if valid attack
-        for (Result res : this.attacks) {
-            if (res.getLocation().getRow() == attackLoc.getRow() && res.getLocation().getColumn() == attackLoc.getColumn()) {
-                result.setResult(AtackStatus.INVALID);
-                return result;
-            }
-        }
+
         // Continue if attack is valid
 		boolean hit = false;
 	    for (Ship ship : this.ships) {
@@ -97,31 +90,55 @@ public class Board {
                     result.setShip(ship);
                     result.setLocation(attackLoc);
                     hit = true;
+                    result.getShip().setCaptainsQuarters();
                     break;
                 }
             }
+	    }
+		// Check if valid attack
+		for (Result res : this.attacks) {
+			if ( (res.getLocation().getRow() == attackLoc.getRow() && res.getLocation().getColumn() == attackLoc.getColumn())) {
+				if(hit){
+					if((attackLoc.getColumn() == result.getShip().getCaptainsQuarters().getColumn() && attackLoc.getRow() == result.getShip().getCaptainsQuarters().getRow())
+					&& (res.getResult() == AtackStatus.MISS)){
+
+					}else{
+						result.setResult(AtackStatus.INVALID);
+						return result;
+					}
+				} else {
+					result.setResult(AtackStatus.INVALID);
+					return result;
+				}
+			}
+		}
 
             if (hit) {
 
-				int hitCount = 0; //keeps track number of hits
-				int shipLength = 0;
-				for( Square s1 : result.getShip().getOccupiedSquares()){ //goes through each square in a ship
-					shipLength++;
-					if ( attackLoc.getColumn() == s1.getColumn() //if you just attacked it, increment hitcount
-							&& attackLoc.getRow() == s1.getRow() ){
-						hitCount++;
-					}
-					for( Result r : attacks){ //goes through each tile already attacked
 
-						if ( s1.getColumn() == r.getLocation().getColumn() //if it was attacked and is in ship increment hitcount
-								&& s1.getRow() == r.getLocation().getRow() ){
-							hitCount++;
+				int sunk = 0;
+				int cquartershit = 0;
 
+				if (result.getShip().getCaptainsQuarters().getColumn() == attackLoc.getColumn() && result.getShip().getCaptainsQuarters().getRow() == attackLoc.getRow()) {
+					if(result.getShip().getArmored() == 0){
+						sunk = 1;
+					}else {
+						int chit = 0;
+						for (Result r : attacks) {
+							if (result.getShip().getCaptainsQuarters().getColumn() == r.getLocation().getColumn() //if it was attacked before sink the ship
+									&& result.getShip().getCaptainsQuarters().getRow() == r.getLocation().getRow()) {
+								chit = 1;
+							}
+						}
+						if (chit == 1) {
+							sunk = 1;
+						} else {
+							cquartershit = 1;
 						}
 					}
 				}
 
-				if(hitCount == shipLength){ //if every tile in the ship has been hit, it was sunk or game is over
+				if(sunk == 1){ //if every tile in the ship has been hit, it was sunk or game is over
 					int sunkShips = 0;
 					for(Result r : attacks){ //go through each attack, count up the number of sunk ships
 						if( r.getResult() == AtackStatus.SUNK){
@@ -134,14 +151,17 @@ public class Board {
 						result.setResult(AtackStatus.SUNK);
 					}
 
-				} else { //if you didnt sink a ship, its just a hit
-					result.setResult(AtackStatus.HIT);
+				} else { //if you didnt sink a ship, its just a hit, unless you hit captains quarters
+					if(cquartershit == 1 && result.getShip().getArmored() == 1){
+						result.setResult(AtackStatus.MISS);
+					}else {
+						result.setResult(AtackStatus.HIT);
+					}
 				}
 
             } else {
                 result.setResult(AtackStatus.MISS);
             }
-        }
         this.attacks.add(result);
         return result;
 	}

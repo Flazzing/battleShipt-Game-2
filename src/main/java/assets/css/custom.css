@@ -148,7 +148,7 @@ td:hover {
 }
 
 .sink {
-    background-color: red;
+    background-color: red !important;
     opacity: .9;
 }
 
