@@ -19,7 +19,7 @@ public class Battleship extends Ship {
         this.captainquarters.setRow(super.getOccupiedSquares().get(2).getRow());
     }
 
-    public Square getCaptainquarters() {
+    public Square getCaptainsQuarters() {
         return this.captainquarters;
     }
 
