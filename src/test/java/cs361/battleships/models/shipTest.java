@@ -11,13 +11,13 @@ import static org.junit.Assert.assertFalse;
 public class shipTest {
     @Test
     public void testLengthKind() {
-        Ship ship = new Ship("MINESWEEPER");
+        Ship ship = new Minesweeper();
         assertTrue(ship.getKind() == "MINESWEEPER");
         assertTrue(ship.getLength() == 2);
-        ship = new Ship("DESTROYER");
+        ship = new Destroyer();
         assertTrue(ship.getKind() == "DESTROYER");
         assertTrue(ship.getLength() == 3);
-        ship = new Ship("BATTLESHIP");
+        ship = new Battleship();
         assertTrue(ship.getKind() == "BATTLESHIP");
         assertTrue(ship.getLength() == 4);
     }

@@ -1,13 +1,11 @@
 package cs361.battleships.models;
 
 public class Destroyer extends Ship {
-
-
     public Destroyer() {
         super();
-        super.setFloatstatus(true);
-        super.setArmored(1);
-        super.setLength(3);
-
+        this.length = 3;
+        this.armored = 1;
+        this.floatstatus = true;
+        this.kind = "DESTROYER";
     }
 }

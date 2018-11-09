@@ -7,14 +7,15 @@ import java.util.ArrayList;
 
 public class Ship {
 
-	@JsonProperty private List<Square> occupiedSquares;
-	@JsonProperty private String kind;
+	@JsonProperty protected List<Square> occupiedSquares;
+	@JsonProperty protected String kind;
 
 	// true = float; false = sunk
-	@JsonProperty private boolean floatstatus;
-	@JsonProperty private int length;
-	@JsonProperty private int armored;
-	@JsonProperty private Square captainsQuarters;
+	@JsonProperty protected boolean floatstatus;
+	@JsonProperty protected int length;
+	@JsonProperty protected int armored;
+	@JsonProperty protected Square captainsQuarters;
+
     public Ship() {
     	occupiedSquares = new ArrayList<>();
     	this.floatstatus = true;
@@ -22,26 +23,17 @@ public class Ship {
 
 	public Ship(String kind) {
 		occupiedSquares = new ArrayList<>();
-        this.kind = kind;
-		switch (kind) {
-			case "MINESWEEPER":
-				this.length = 2;
-				this.armored = 0;
-				this.floatstatus = true;
-				break;
-			case "DESTROYER":
-				this.length = 3;
-				this.armored = 1;
-				this.floatstatus = true;
-				break;
-			case "BATTLESHIP":
-				this.length = 4;
-				this.armored = 1;
-				this.floatstatus = true;
-				break;
-		}
+		this.kind = kind;
 	}
 
+	public Ship(Ship other) {
+        this.kind = other.getKind();
+        this.length = other.getLength();
+        this.armored = other.getArmored();
+        this.captainsQuarters = other.getCaptainsQuarters();
+        this.occupiedSquares = other.getOccupiedSquares();
+        this.floatstatus = other.getFloatStatus();
+	}
 	void setFloatstatus(boolean floatstatus) {
 		this.floatstatus = floatstatus;
 	}

@@ -1,11 +1,11 @@
 package cs361.battleships.models;
 
 public class Minesweeper extends Ship {
-    public Minesweeper()
-    {
+    public Minesweeper() {
         super();
-        super.setFloatstatus(true);
-        super.setArmored(0);
-        super.setLength(2);
+        this.length = 2;
+        this.armored = 0;
+        this.floatstatus = true;
+        this.kind = "MINESWEEPER";
     }
 }
