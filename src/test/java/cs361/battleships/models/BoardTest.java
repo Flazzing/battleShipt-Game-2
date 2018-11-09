@@ -2,6 +2,9 @@ package cs361.battleships.models;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 
@@ -62,6 +65,24 @@ public class BoardTest {
         assertTrue( board.attack(5, 'D').getResult() == AtackStatus.MISS); //miss
         assertFalse( board.attack(4, 'E').getResult() == AtackStatus.MISS); //hit battleship
         assertFalse( board.attack(6, 'C').getResult() == AtackStatus.MISS); //hit minesweeper
+    }
+
+    @Test
+    public void testSonarConditions() {
+        Board board = new Board();
+        assertFalse(board.sonar(5, 'c', 2));
+        assertFalse(board.sonar(5, 'c', 0));
+    }
+
+    @Test
+    public void testSonarPlacement() {
+        Board board = new Board();
+        List<Result> atks = new ArrayList<>();
+        Result res = new Result();
+        res.setResult(AtackStatus.SUNK);
+        atks.add(res);
+        board.setAttacks(atks);
+        assertTrue(board.sonar(5, 'c', 2));
     }
 
     @Test
