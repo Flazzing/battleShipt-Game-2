@@ -36,6 +36,78 @@ public class shipTest {
     @Test
     public void testDefault() {
         Ship ship = new Ship();
+        ArrayList<Square> sqs = new ArrayList<>();
+        sqs.add(new Square(1, 'A'));
+        sqs.add(new Square(2, 'B'));
+        ship.setOccupiedSquares(sqs);
+
         assertTrue(ship.getKind() == null);
+    }
+
+    @Test
+    public void testBattleshipHorizontalCaptainQuarter() {
+        Ship ship = new Battleship();
+        ArrayList<Square> sqs = new ArrayList<>();
+        sqs.add(new Square(1, 'A'));
+        sqs.add(new Square(1, 'B'));
+        sqs.add(new Square(1, 'C'));
+        sqs.add(new Square(1, 'D'));
+
+        ship.setOccupiedSquares(sqs);
+
+        ((Battleship) ship).setLocation();
+        System.out.println("Row: " + ((Battleship) ship).getCaptainsQuarters().getRow());
+        System.out.println("Column: " + ((Battleship) ship).getCaptainsQuarters().getColumn());
+
+    }
+
+    @Test
+    public void testBattleshipVerticalCaptainQuarter() {
+        Ship ship = new Battleship();
+        ArrayList<Square> sqs = new ArrayList<>();
+        sqs.add(new Square(1, 'A'));
+        sqs.add(new Square(2, 'A'));
+        sqs.add(new Square(3, 'A'));
+        sqs.add(new Square(4, 'A'));
+
+        ship.setOccupiedSquares(sqs);
+
+        ((Battleship) ship).setLocation();
+        System.out.println("Row: " + ((Battleship) ship).getCaptainsQuarters().getRow());
+        System.out.println("Column: " + ((Battleship) ship).getCaptainsQuarters().getColumn());
+
+    }
+
+    @Test
+    public void testDestroyerHorizontalCaptainQuarter()
+    {
+        Ship ship = new Destroyer();
+        ArrayList<Square> sqs = new ArrayList<>();
+        sqs.add(new Square(1, 'A'));
+        sqs.add(new Square(1, 'B'));
+        sqs.add(new Square(1, 'C'));
+        sqs.add(new Square(1, 'D'));
+
+        ship.setOccupiedSquares(sqs);
+        ((Destroyer) ship).setLocation();
+        System.out.println("Row: " + ((Destroyer) ship).getCaptainsQuarters().getRow());
+        System.out.println("Column: " + ((Destroyer) ship).getCaptainsQuarters().getColumn());
+    }
+
+    @Test
+    public void testDestroyerVerticalCaptainQuarter()
+    {
+        Ship ship = new Destroyer();
+        ArrayList<Square> sqs = new ArrayList<>();
+        sqs.add(new Square(1, 'A'));
+        sqs.add(new Square(2, 'A'));
+        sqs.add(new Square(3, 'A'));
+        sqs.add(new Square(4, 'A'));
+
+        ship.setOccupiedSquares(sqs);
+
+        ((Destroyer) ship).setLocation();
+        System.out.println("Row: " + ((Destroyer) ship).getCaptainsQuarters().getRow());
+        System.out.println("Column: " + ((Destroyer) ship).getCaptainsQuarters().getColumn());
     }
 }

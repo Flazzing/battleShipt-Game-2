@@ -9,10 +9,14 @@ public class Ship {
 
 	@JsonProperty private List<Square> occupiedSquares;
 	@JsonProperty private String kind;
-	private int length;
+
+	// true = float; false = sunk
+	@JsonProperty private boolean floatstatus;
+	@JsonProperty private int length;
 
     public Ship() {
     	occupiedSquares = new ArrayList<>();
+    	this.floatstatus = true;
     }
 
 	public Ship(String kind) {
@@ -21,15 +25,24 @@ public class Ship {
 		switch (kind) {
 			case "MINESWEEPER":
 				this.length = 2;
+				this.floatstatus = true;
 				break;
 			case "DESTROYER":
 				this.length = 3;
+				this.floatstatus = true;
 				break;
 			case "BATTLESHIP":
 				this.length = 4;
+				this.floatstatus = true;
 				break;
 		}
 	}
+
+	void setFloatstatus(boolean floatstatus) {
+		this.floatstatus = floatstatus;
+	}
+
+	boolean getFloatStatus(){return this.floatstatus;}
 
 	List<Square> getOccupiedSquares() {
 	    return this.occupiedSquares;
@@ -43,4 +56,5 @@ public class Ship {
 	int getLength() {
     	return this.length;
 	}
+	void setLength(int x){this.length=x;}
 }
