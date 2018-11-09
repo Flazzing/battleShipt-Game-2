@@ -5,6 +5,7 @@ public class Minesweeper extends Ship {
     {
         super();
         super.setFloatstatus(true);
+        super.setArmored(0);
         super.setLength(2);
     }
 }

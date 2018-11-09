@@ -13,7 +13,8 @@ public class Ship {
 	// true = float; false = sunk
 	@JsonProperty private boolean floatstatus;
 	@JsonProperty private int length;
-
+	@JsonProperty private int armored;
+	@JsonProperty private Square captainsQuarters;
     public Ship() {
     	occupiedSquares = new ArrayList<>();
     	this.floatstatus = true;
@@ -25,14 +26,17 @@ public class Ship {
 		switch (kind) {
 			case "MINESWEEPER":
 				this.length = 2;
+				this.armored = 0;
 				this.floatstatus = true;
 				break;
 			case "DESTROYER":
 				this.length = 3;
+				this.armored = 1;
 				this.floatstatus = true;
 				break;
 			case "BATTLESHIP":
 				this.length = 4;
+				this.armored = 1;
 				this.floatstatus = true;
 				break;
 		}
@@ -57,4 +61,8 @@ public class Ship {
     	return this.length;
 	}
 	void setLength(int x){this.length=x;}
+	int getArmored(){ return this.armored; }
+	void setArmored(int a) { this.armored = a; }
+	void setCaptainsQuarters(){ this.captainsQuarters = this.occupiedSquares.get(1); }
+	Square getCaptainsQuarters() { return this.captainsQuarters; }
 }

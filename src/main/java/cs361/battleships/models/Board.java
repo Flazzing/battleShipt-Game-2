@@ -82,8 +82,6 @@ public class Board {
         result.setLocation(attackLoc);
 
 
-		List<Square> occsquares;
-		Square cquarters = null;
         // Continue if attack is valid
 		boolean hit = false;
 	    for (Ship ship : this.ships) {
@@ -93,8 +91,7 @@ public class Board {
                     result.setShip(ship);
                     result.setLocation(attackLoc);
                     hit = true;
-					occsquares = result.getShip().getOccupiedSquares();
-					cquarters = occsquares.get(1);
+                    result.getShip().setCaptainsQuarters();
                     break;
                 }
             }
@@ -103,7 +100,7 @@ public class Board {
 		for (Result res : this.attacks) {
 			if ( (res.getLocation().getRow() == attackLoc.getRow() && res.getLocation().getColumn() == attackLoc.getColumn())) {
 				if(hit){
-					if((attackLoc.getColumn() == cquarters.getColumn() && attackLoc.getRow() == cquarters.getRow())
+					if((attackLoc.getColumn() == result.getShip().getCaptainsQuarters().getColumn() && attackLoc.getRow() == result.getShip().getCaptainsQuarters().getRow())
 					&& (res.getResult() == AtackStatus.MISS)){
 
 					}else{
@@ -120,29 +117,17 @@ public class Board {
             if (hit) {
 
 
-				int hitCount = 0; //keeps track number of hits
 				int sunk = 0;
 				int cquartershit = 0;
-				if (result.getShip().getKind().equals("MINESWEEPER")){
-					System.out.println("im a minesweeper");
-					for (Square s1 : result.getShip().getOccupiedSquares()) { //goes through each square in a ship
-						for (Result r : attacks) { //goes through each tile already attacked
-							if (s1.getColumn() == r.getLocation().getColumn() //if it was attacked and is in ship increment hitcount
-									&& s1.getRow() == r.getLocation().getRow()) {
-								hitCount++;
-							}
-						}
-					}
-					if(hitCount == 1) {
-						sunk = 1;
-					}
-				}else {
 
-					if (cquarters.getColumn() == attackLoc.getColumn() && cquarters.getRow() == attackLoc.getRow()) {
+				if (result.getShip().getCaptainsQuarters().getColumn() == attackLoc.getColumn() && result.getShip().getCaptainsQuarters().getRow() == attackLoc.getRow()) {
+					if(result.getShip().getArmored() == 0){
+						sunk = 1;
+					}else {
 						int chit = 0;
 						for (Result r : attacks) {
-							if (cquarters.getColumn() == r.getLocation().getColumn() //if it was attacked before sink the ship
-									&& cquarters.getRow() == r.getLocation().getRow()) {
+							if (result.getShip().getCaptainsQuarters().getColumn() == r.getLocation().getColumn() //if it was attacked before sink the ship
+									&& result.getShip().getCaptainsQuarters().getRow() == r.getLocation().getRow()) {
 								chit = 1;
 							}
 						}
@@ -168,7 +153,7 @@ public class Board {
 					}
 
 				} else { //if you didnt sink a ship, its just a hit, unless you hit captains quarters
-					if(cquartershit == 1 && result.getShip().getKind() != "MINESWEEPER"){
+					if(cquartershit == 1 && result.getShip().getArmored() == 1){
 						result.setResult(AtackStatus.MISS);
 					}else {
 						result.setResult(AtackStatus.HIT);
