@@ -6,7 +6,6 @@
 header{
     height: 115px;
     border: #cce6ff;
-    background-image: url("Battleship.png");
     font-style:light;
     margin: 5px;
     font-size: 100px;
@@ -40,6 +39,7 @@ header{
     margin-right: auto;
     align-items: center;
     width: 93%;
+    opacity:0.8;
 }
 #last_action {
     text-align: center;
@@ -49,6 +49,7 @@ header{
     border: 1px solid black;
     border-radius: 2px;
     background-color: white;
+    opacity:0.8;
 }
 #place_buttons {
     background-color: white;
@@ -136,13 +137,18 @@ td:hover {
     opacity: 1;
 }
 
+.gray {
+    background-color: gray;
+    opacity: 1;
+}
+
 .hit {
     background-color: orange;
     opacity: .9;
 }
 
 .sink {
-    background-color: red;
+    background-color: red !important;
     opacity: .9;
 }
 
